@@ -1,0 +1,16 @@
+.layout_left{
+  overflow: auto;
+  height: 100vh;
+}
+
+.layout_right{
+  min-height: 100vh;
+}
+
+.layout_header{
+  background-color: #eff2f7;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
