@@ -2,8 +2,9 @@ import { Layout, Card } from 'antd'
 import { RouterView } from "../../router"
 import { Switch } from "react-router-dom"
 import React from "react"
-import './layout.css'
-import LayoutMenu from './_menu'
+import styles from './layout.module.css'
+import LayoutMenu from './components/_menu'
+import LayoutHeader from "./components/_header"
 
 const { Header, Sider, Content } = Layout
 
@@ -13,12 +14,12 @@ interface Props{
 export default function ContentLayout({ children }: Props) {
     return (
         <Layout>
-            <Sider className="layout_left" collapsible>
+            <Sider className={styles.layout_left} collapsible>
                 <LayoutMenu/>
             </Sider>
-            <Layout className="layout_right">
-                <Header className="layout_header">
-
+            <Layout className={styles.layout_right}>
+                <Header className={styles.layout_header}>
+                    <LayoutHeader/>
                 </Header>
                 <Content>
                     <Card className="page_container">

@@ -1,4 +1,4 @@
-import { PaperClipOutlined, TeamOutlined, TagOutlined, UserOutlined, ShopOutlined, PartitionOutlined } from '@ant-design/icons';
+import { PaperClipOutlined, TeamOutlined, TagOutlined, UserOutlined, ShopOutlined, PartitionOutlined } from '@ant-design/icons'
 
 const menus = [
     {

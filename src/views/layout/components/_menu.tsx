@@ -1,5 +1,5 @@
 import { Menu } from 'antd'
-import menus from './menus'
+import menus from '../menus'
 import React from 'react'
 import {useHistory, useLocation} from "react-router-dom"
 

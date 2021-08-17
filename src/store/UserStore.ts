@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, runInAction } from 'mobx'
 import $http from '../http'
 import urls from '../http/urls'
 
@@ -29,7 +29,9 @@ class UserStore{
     async updateUser() {
         return $http.fetch(urls.adminInfo).then(r => {
             if(r.success){
-                this.userInfo = r.info
+                runInAction(() => {
+                    this.userInfo = r.info
+                })
                 return true
             }
         })
