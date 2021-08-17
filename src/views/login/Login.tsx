@@ -6,7 +6,7 @@ import { UserOutlined, PhoneOutlined, LockOutlined } from '@ant-design/icons'
 import styles from './Login.module.css'
 import $http from '../../http'
 import urls from '../../http/urls'
-import UserStore from '../../store/UserStore'
+import jsCookie from "js-cookie"
 
 const layout = {
     labelCol: { span: 8 },
@@ -21,6 +21,8 @@ export default function Login() {
         {label: '超级管理员', value: 1},
         {label: '店铺管理员', value: 2},
     ]
+
+    jsCookie.remove('SID') // 清空登录信息
 
     const validateForm = (type: number) => {
         formRef.validateFields().then(val => {

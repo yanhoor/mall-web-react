@@ -94,7 +94,7 @@ const menus = [
         key: 4,
         title: '个人信息',
         icon: UserOutlined,
-        path: '/me'
+        path: '/home/me'
     },
 ]
 

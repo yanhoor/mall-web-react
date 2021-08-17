@@ -1,18 +1,21 @@
 import { Menu } from 'antd'
 import menus from './menus'
 import React from 'react'
-import { useHistory } from "react-router-dom"
+import {useHistory, useLocation} from "react-router-dom"
 
 const { SubMenu } = Menu
 
 export default function LayoutMenu() {
 
     let history = useHistory()
+    let location = useLocation()
 
     function getMenuItem(children: Array<any>): React.ReactNode {
 
         let onClickMenuItem = (path: string) => {
-            history.push(path)
+            if(location.pathname !== path){
+                history.push(path)
+            }
         }
 
         return children.map(item => {

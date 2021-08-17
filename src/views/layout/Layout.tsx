@@ -1,17 +1,16 @@
 import { Layout, Card } from 'antd'
-import {NoMatchRoute, RouterView, routes} from "../../router"
-import {Switch, Redirect} from "react-router-dom"
+import { RouterView } from "../../router"
+import { Switch } from "react-router-dom"
 import React from "react"
 import './layout.css'
 import LayoutMenu from './_menu'
 
-const { Header, Footer, Sider, Content } = Layout
+const { Header, Sider, Content } = Layout
 
 interface Props{
     children: Array<any>
 }
 export default function ContentLayout({ children }: Props) {
-    console.log('===================', children)
     return (
         <Layout>
             <Sider className="layout_left" collapsible>
@@ -24,9 +23,11 @@ export default function ContentLayout({ children }: Props) {
                 <Content>
                     <Card className="page_container">
                         <Switch>
-                            {children.map((route, i) => (
-                                <RouterView key={i} {...route}/>
-                            ))}
+                            {children.map((route, i) => {
+                                return (
+                                    <RouterView key={i} {...route}/>
+                                )
+                            })}
 
                         </Switch>
                     </Card>
