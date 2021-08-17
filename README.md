@@ -1,5 +1,9 @@
 # mall-web-react
 
+## 技术栈
+
+`React + React-router + Mobx + history + antd`
+
 ## 创建过程
 
 - `npx create-react-app mall-web-react --template typescript`
@@ -102,6 +106,25 @@
   }
 
   export default new UserStore()
+  ```
+
+- 在 `App.tsx` 引入
+
+  ```tsx
+  import { Provider } from 'mobx-react'
+  import UserStore from './userStore'
+
+  const Store = { UserStore }
+
+  function App() {
+    return (
+        <Provider {...Store}>
+            <div className="App">
+
+            </div>
+        </Provider>
+    )
+  }
   ```
 
 - 在组件使用

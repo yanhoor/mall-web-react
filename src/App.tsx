@@ -22,7 +22,7 @@ function App() {
               </Router>
           </div>
       </Provider>
-  );
+  )
 }
 
 export default App;
