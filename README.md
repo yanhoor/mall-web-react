@@ -12,6 +12,27 @@
 
   - `npm i -S react-router-dom @types/react-router-dom`
 
+- 本地开发代理
+
+  - `cnpm i -D http-proxy-middleware`
+
+  - `src` 下新增文件 `setupProxy.js`
+
+  ```JavaScript
+  const { createProxyMiddleware } = require('http-proxy-middleware');
+
+  module.exports = function (app) {
+      app.use(createProxyMiddleware('/api',{
+          target: process.env.REACT_APP_BASE_URL,
+          changeOrigin: true,
+          pathRewrite: {
+              '^/api': ''
+          }
+      }))
+
+  };
+  ```
+
 - 增加 `@` 别名：
 
   - 安装 `cpm i -D customize-cra react-app-rewired`
@@ -125,11 +146,11 @@
   }
   ```
 
-- 引入 `import styles from './Login.module.css'`
-
-- 在对应元素上使用 `className`
+- 引入并在对应元素上使用 `className`
 
   ```jsx
+  import styles from './Login.module.css'
+
   function Login(){
       return (
           <p className={styles.container}></p>

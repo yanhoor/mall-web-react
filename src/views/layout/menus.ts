@@ -23,7 +23,7 @@ const menus = [
                 key: 12,
                 title: '管理员列表',
                 icon: TeamOutlined,
-                path: '/admin'
+                path: '/home/admin'
             },
             // {
             //     key: 1,

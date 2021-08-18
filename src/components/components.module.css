@@ -15,3 +15,7 @@
     text-align: center;
     margin-top: 10px;
 }
+
+.table_striped {
+    background-color: #fafafa;
+}

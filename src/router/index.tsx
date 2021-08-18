@@ -6,6 +6,7 @@ import ContentLayout from '../views/layout/Layout'
 import About from '../views/home/About'
 import Login from '../views/login/Login'
 import AdminIndex from '../views/admin/Admin'
+import AdminList from "@/views/admin/List"
 import PageNotFound from '../views/PageNotFound'
 import jsCookie from "js-cookie"
 import {observer} from "mobx-react"
@@ -104,6 +105,11 @@ const routes: RouteProps[] = [
                 redirect: '/home/me',
                 exact: true,
                 from: '/home'
+            },
+            {
+                path: '/home/admin',
+                component: AdminList,
+                roles: superAuth
             },
             {
                 path: '/home/about',
