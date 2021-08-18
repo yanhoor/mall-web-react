@@ -5,7 +5,7 @@ import rules from '../../config/rules'
 import { UserOutlined, PhoneOutlined, LockOutlined } from '@ant-design/icons'
 import styles from './Login.module.css'
 import $http from '../../http'
-import urls from '../../http/urls'
+import urls from '@/http/urls'
 import jsCookie from "js-cookie"
 
 const layout = {

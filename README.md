@@ -2,7 +2,7 @@
 
 ## 技术栈
 
-`React + React-router + Mobx + history + antd`
+`React + React-router + Mobx + history + antd + less`
 
 ## 创建过程
 
@@ -10,19 +10,37 @@
 
 - 添加路由
 
-  - `npm i -S react-router-dom`
-
-  - `npm i -S @types/react-router-dom`
-
-- 引入 `antd`
-
-  - 安装 `cpn i -S antd`
-
-  - 在 `index.tsx` 引入 `import 'antd/dist/antd.css'`
+  - `npm i -S react-router-dom @types/react-router-dom`
 
 - 增加 `@` 别名：
 
-  - 根目录增加 `tsconfig.paths.json`
+  - 安装 `cpm i -D customize-cra react-app-rewired`
+
+  - 根目录添加 `config-overrides.js`
+
+  ```JavaScript
+  const { override, addWebpackAlias, addLessLoader } = require('customize-cra')
+  const path = require('path')
+
+  module.exports = override(
+      addWebpackAlias({
+          "@": path.resolve(__dirname, "src")
+      }),
+  )
+  ```
+
+  - `package.json` 启动命令修改
+
+  ```json
+  "scripts": {
+      "start": "react-app-rewired start",
+      "build": "react-app-rewired build",
+      "test": "react-app-rewired test",
+      "eject": "react-scripts eject"
+  }
+  ```
+
+  - 根目录添加 `tsconfig.paths.json`
 
   ```json
   {
@@ -43,6 +61,45 @@
     "compilerOptions": {...}
   }
   ```
+
+- 引入 `antd`
+
+  - 安装 `cpn i -S antd`
+
+  - 在 `index.tsx` 引入 `import 'antd/dist/antd.css'`（使用 `less` 引入的是 `import 'antd/dist/antd.less'`）
+
+- 使用 `Less`
+
+  - 安装 `cnpm i -D less less-loader@5.0.0`，`less-loader` 需要 `5.0.0` 版本，其他版本可能报错
+
+  - 修改 `config-overrides.js`
+
+    ```JavaScript
+    const { override, addWebpackAlias, addLessLoader } = require('customize-cra')
+    const path = require('path')
+
+    module.exports = override(
+        addLessLoader({
+            javascriptEnabled: true,
+            // 修改 antd 的主题色，同时需要 index.tsx 引入 import 'antd/dist/antd.less'
+            modifyVars: {
+                "@brand-primary": '#64BFBB',
+                '@primary-color': '#1DA57A'
+            }
+        }),
+    )
+    ```
+
+  - 在 `src` 下的 `react-app-env.d.ts` 新增
+
+    ```TypeScript
+    declare module "*.less"{
+        const content: { [className: string]: string };
+        export default content
+    }
+    ```
+
+  - 其他类似使用 `CSS Module` 语法， 如文件名以 `.module.less` 结尾
 
 ## `CSS Module` 语法
 

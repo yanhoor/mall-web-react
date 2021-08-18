@@ -2,7 +2,7 @@ import { Layout, Card } from 'antd'
 import { RouterView } from "../../router"
 import { Switch } from "react-router-dom"
 import React from "react"
-import styles from './layout.module.css'
+import styles from './layout.module.less'
 import LayoutMenu from './components/_menu'
 import LayoutHeader from "./components/_header"
 
