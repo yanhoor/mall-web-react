@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Input, Row, Col, Button, Tag } from 'antd'
+import { Form, Input, Row, Col, Button, Tag, message } from 'antd'
+import { observer, inject } from 'mobx-react'
 import LayoutList from "@/views/layout/components/_listContent"
 import CustomTable from "@/components/customAnt/table"
 import urls from "@/http/urls"
 import {TablePaginationConfig} from "antd/es/table"
 import { usePageList } from "@/hooks"
+import $http from "@/http"
 
-export default function AdminList(){
+function AdminList(props: any){
     const [ formRef ] = Form.useForm()
+    const { UserStore } = props
     let { pageList, pagination, getPageList, setPagination } = usePageList({
         url: urls.adminList,
         options: { method: 'get' }
@@ -28,6 +31,18 @@ export default function AdminList(){
 
     const handleTableChange = (page: TablePaginationConfig, filters: any, sorter: any) => {
         setPagination(page)
+    }
+
+    const handleChangeAdminState = (id: number, state: number) => {
+        $http.fetch(urls.adminChangeState, { state, id }).then(r => {
+            if(r.success){
+                message.success(r.msg)
+                onQuery()
+                return r
+            }else{
+                message.error(r.msg)
+            }
+        })
     }
 
     const top = (
@@ -110,6 +125,24 @@ export default function AdminList(){
             dataIndex: 'create_time',
             key: 'create_time'
         },
+        {
+            title: '操作',
+            dataIndex: 'action',
+            key: 'action',
+            render: (text: string, record: any, index: number) => {
+                const disabled = UserStore.userInfo.id === record.id
+
+                return (
+                    <p>
+                        {
+                            record.state === 1
+                                ? <Button type="link" disabled={disabled} onClick={() => handleChangeAdminState(record.id, 2)}>禁用</Button>
+                                : <Button type="link" disabled={disabled} onClick={() => handleChangeAdminState(record.id, 1)}>启用</Button>
+                        }
+                    </p>
+                )
+            }
+        },
     ]
 
     return (
@@ -125,3 +158,5 @@ export default function AdminList(){
         />
     )
 }
+
+export default inject('UserStore')(observer(AdminList))

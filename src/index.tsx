@@ -1,12 +1,24 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import App from './App'
+import reportWebVitals from './reportWebVitals'
+import { Provider } from 'mobx-react'
+import { ConfigProvider } from 'antd'
+import zhCN from 'antd/lib/locale/zh_CN'
+import * as Store from "@/store"
+import moment from 'moment'
+import 'moment/locale/zh-cn'
 import 'antd/dist/antd.less'
-import './index.css';
+import './index.css'
+
+moment.locale('en')
 
 ReactDOM.render(
-    <App />,
+    <Provider {...Store}>
+        <ConfigProvider locale={zhCN}>
+            <App />
+        </ConfigProvider>
+    </Provider>,
   document.getElementById('root')
 );
 

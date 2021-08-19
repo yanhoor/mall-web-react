@@ -40,7 +40,8 @@ function usePageList({ url, params, options }: PageListProps){
 
     useEffect(getPageList, [pagination.current, pagination.pageSize])
 
-    return { pageList, pagination, getPageList, setPagination } // 如果是数组，使用时会报错
+    // 如果是数组，使用 setPagination 时会报错，具体 https://stackoverflow.com/questions/65657572/custom-useinput-hook-and-typescript-error
+    return { pageList, pagination, getPageList, setPagination }
 }
 
 export { usePageList }
