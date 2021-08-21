@@ -26,7 +26,7 @@ interface RouteProps extends BaseRouteProps{
 
 // 路由组件
 const RouterView = (route: RouteProps) => {
-    console.log('----------------RouterView-----------------', route)
+    console.log('----------------RouterView props-----------------', route)
     console.log('----------------useRouteMatch-----------------', useRouteMatch())
     return (
         route.redirect
@@ -36,18 +36,18 @@ const RouterView = (route: RouteProps) => {
                 from={route.from}
                 to={route.redirect}/>
             : <Route
-            path={route.path}
-            exact={route.exact}
-            strict={route.strict}
-            render={props => {
-                console.log('-------------route.props----------', props)
-                // pass the sub-routes down to keep nesting
-                return (
-                    route.roles
-                    ? <AuthRoute routeProps={props} route={route} children={route.children}/>
-                    : <route.component {...props} children={route.children} />
-                )
-            }}
+                path={route.path}
+                exact={route.exact}
+                strict={route.strict}
+                render={props => {
+                    console.log('-------------route.props----------', props)
+                    // pass the sub-routes down to keep nesting
+                    return (
+                        route.roles
+                            ? <AuthRoute routeProps={props} route={route} children={route.children}/>
+                            : <route.component {...props} children={route.children} />
+                    )
+                }}
         />
     )
 }
@@ -58,7 +58,6 @@ const AuthRoute = observer((props: any) => {
     const userInfo = userStore.userInfo
     const sid = jsCookie.get('SID')
     const routeRoles = props.route.roles
-    let location = useLocation()
 
     if(!sid){
         message.error('未登录')
@@ -75,9 +74,7 @@ const AuthRoute = observer((props: any) => {
                 <props.route.component {...props.routeProps} children={props.children}/>
             )
         }else{
-            return (
-                <PageNotFound path={location.pathname}/>
-            )
+            return (<Redirect to={{pathname: '/pageNotFound'}}/>)
         }
     }
 })
@@ -126,7 +123,7 @@ const routes: RouteProps[] = [
             {
                 path: '/home/shopCategory',
                 component: ShopCategoryList,
-                roles: allAuth
+                roles: superAuth
             },
             {
                 path: '/home/shopList',
@@ -149,11 +146,20 @@ const routes: RouteProps[] = [
                 component: AdminIndex,
                 roles: allAuth
             },
+            {
+                redirect: '/pageNotFound', // 随便一个不存在的一级路由，匹配404
+                exact: true,
+                from: '/home/*'
+            },
         ],
     },
     {
         path: '/login',
         component: Login,
+    },
+    {
+        path: '*',
+        component: PageNotFound,
     },
 ]
 
@@ -161,12 +167,12 @@ const routes: RouteProps[] = [
 function RouteTree2List(list: Array<any>) {
     let  result: Array<any> = []
     list.forEach(item => {
-        if(item.children){
-            result = result.concat(RouteTree2List(item.children))
-            result.push(item)
-        }else{
-            result.push(item)
+        const temp = { ...item }
+        if(temp.children){
+            result = result.concat(RouteTree2List(temp.children))
+            temp.children = result
         }
+        result.push(item)
     })
 
     return result

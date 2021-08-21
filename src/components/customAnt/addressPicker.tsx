@@ -83,8 +83,8 @@ export default function AddressPicker({ addressName, value, onChange, onUpdate }
         <div className={styles.picker_container}>
             <Input disabled value={addressText} title={addressText}/>
             <Cascader
-                defaultValue={value}
-                // value={value} // 导致 onChange 参数最后一个选项为空
+                // defaultValue={value}
+                value={value} // 导致 onChange 参数最后一个选项为空
                 options={options}
                 fieldNames={{ label: 'fullname', value: 'id' }}
                 onChange={onValueChange}

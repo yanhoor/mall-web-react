@@ -11,10 +11,6 @@ function App() {
                   {routes.map((route, i) => (
                       <RouterView key={i} {...route}/>
                   ))}
-
-                  <Route path="*">
-                      <NoMatchRoute />
-                  </Route>
               </Switch>
           </Router>
       </div>

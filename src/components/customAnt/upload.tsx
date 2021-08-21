@@ -65,7 +65,7 @@ export default function CustomUpload(props: Props){
                     ? <Tooltip title="点击修改">
                         <img src={imgFullPath} className={styles.img_preview} />
                     </Tooltip>
-                    : <div className={styles.upload_action}>
+                    : <div className={`${styles.upload_action} upload_action`}>
                         <PlusOutlined style={{fontSize: '36px'}} />
                         <p>点击上传</p>
                     </div>

@@ -14,8 +14,8 @@ export default function PageNotFound({ path }: Props) {
     return (
         <>
             <Result
-                status="403"
-                title="403"
+                status="404"
+                title="404"
                 subTitle="想写几句骚话..."
                 extra={<Button type="primary" onClick={onClick}>返回首页</Button>}
             />,

@@ -9,7 +9,7 @@ import * as Store from "@/store"
 import moment from 'moment'
 import 'moment/locale/zh-cn'
 import 'antd/dist/antd.less'
-import './index.css'
+import './index.less'
 
 moment.locale('en')
 
