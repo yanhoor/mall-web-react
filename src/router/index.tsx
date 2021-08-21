@@ -1,5 +1,8 @@
 import {Route, useLocation, Redirect, useRouteMatch} from "react-router-dom"
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import jsCookie from "js-cookie"
+import {observer} from "mobx-react"
+import { message } from 'antd'
 import { RouteProps as BaseRouteProps } from 'react-router'
 import { UserStore } from '../store'
 import ContentLayout from '../views/layout/Layout'
@@ -7,10 +10,11 @@ import About from '../views/home/About'
 import Login from '../views/login/Login'
 import AdminIndex from '../views/admin/Admin'
 import AdminList from "@/views/admin/List"
+import GoodsLabelList from "@/views/goodsLabel/List"
+import ShopList from "@/views/shop/List"
+import ShopCategoryList from "@/views/shopCategory/List"
+import ShopManagement from "@/views/shop/Management"
 import PageNotFound from '../views/PageNotFound'
-import jsCookie from "js-cookie"
-import {observer} from "mobx-react"
-import { message } from 'antd'
 
 interface RouteProps extends BaseRouteProps{
     component?: any,
@@ -116,6 +120,26 @@ const routes: RouteProps[] = [
                 // exact: true,
                 component: About,
                 roles: superAuth
+            },
+            {
+                path: '/home/shopCategory',
+                component: ShopCategoryList,
+                roles: allAuth
+            },
+            {
+                path: '/home/shopList',
+                component: ShopList,
+                roles: superAuth
+            },
+            {
+                path: '/home/shopDetail',
+                component: ShopManagement,
+                roles: allAuth
+            },
+            {
+                path: '/home/goodsLabel',
+                component: GoodsLabelList,
+                roles: allAuth
             },
             {
                 path: '/home/me',

@@ -4,14 +4,14 @@ import { PlusOutlined } from '@ant-design/icons'
 import { RcFile } from 'antd/es/upload/interface'
 import $http from "../../http"
 import urls from "../../http/urls"
-import styles from '../components.module.css'
+import styles from '../components.module.less'
 
 type FileItem = RcFile
 
 interface Props {
     typeList?: string[]
     uploadPath?: string
-    value: string
+    value?: string
     maxSize?: number // M
     onChange?: (value: string) => void
 }
@@ -19,7 +19,7 @@ interface Props {
 export default function CustomUpload(props: Props){
 
     let {
-        value,
+        value = '',
         maxSize = 10,
         typeList = ['.jpg', '.jpeg', '.png', '.gif'],
         uploadPath = '/file/upload',
@@ -32,10 +32,14 @@ export default function CustomUpload(props: Props){
         const ldx = file.name?.lastIndexOf('.')
         const ext = file.name?.substring(ldx as number)
         const isLimit = file.size / 1024 / 1024 > maxSize
+        const isAllow = typeList.includes(ext as string)
+        if(!isAllow){
+            message.error(`仅允许 ${typeList.join('/')} 格式`)
+        }
         if (isLimit) {
             message.error(`最大不能超过 ${maxSize}M`)
         }
-        return typeList.includes(ext as string) && !isLimit
+        return isAllow && !isLimit
     }
 
     const customRequest = (prop: any) => {

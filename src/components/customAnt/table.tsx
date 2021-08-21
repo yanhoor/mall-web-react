@@ -1,7 +1,9 @@
-import React from 'react'
-import { Table, Button, } from 'antd'
-import { ColumnsType, ColumnProps, TablePaginationConfig } from 'antd/es/table'
-import styles from '../components.module.css'
+import React, {useEffect, useState} from 'react'
+import { Table} from 'antd'
+import { ColumnProps, TablePaginationConfig } from 'antd/es/table'
+import styles from '../components.module.less'
+import {ExpandableConfig} from "rc-table/lib/interface"
+import { debounce } from 'lodash'
 
 interface Item{
     [name: string]: any
@@ -14,14 +16,20 @@ interface Props{
     rowKey?: string
     pagination?: TablePaginationConfig
     onChange: (page: TablePaginationConfig, filters: any, sorter: any) => void
-    // fetchOptions: {
-    //     url: string
-    //     params?: FetchParams
-    //     options?: RequestOptions
-    // }
+    expandable?: ExpandableConfig<Item>
 }
 
-export default function CustomTable({ columns, rowKey = 'id', onChange, pagination, dataSource }: Props){
+export default function CustomTable({ columns, rowKey = 'id', onChange, pagination, dataSource, expandable }: Props){
+
+    const [tableScrollHeight, setTableScrollHeight] = useState<number>()
+
+    useEffect(() => {
+        window.addEventListener('resize', adjustTable)
+    }, [])
+
+    useEffect(() => {
+        adjustTable()
+    }, [dataSource])
 
     const modifyColumns = (): ColumnProps<Item>[] => {
         const hasIndex = columns.some((column) => column.key === 'index')
@@ -46,8 +54,23 @@ export default function CustomTable({ columns, rowKey = 'id', onChange, paginati
         return columns
     }
 
+    const adjustTable = debounce(async () => {
+        const rh = document.querySelector('#layoutRight')?.clientHeight as number
+        const dh = document.documentElement.clientHeight
+        const table = document.querySelector('#pageTable')
+        if(table){
+            const offset = table.getBoundingClientRect()
+            if(rh > dh){
+                setTableScrollHeight(offset.height - (rh - dh) - 110)
+            }else{
+                setTableScrollHeight(rh - offset.top - 150)
+            }
+        }
+    }, 20)
+
     return (
         <Table<Item>
+            id="pageTable"
             size="middle"
             rowClassName={(record, index) => {
                 if(index % 2 === 1) return styles.table_striped
@@ -56,6 +79,8 @@ export default function CustomTable({ columns, rowKey = 'id', onChange, paginati
             pagination={pagination}
             onChange={onChange}
             dataSource={ dataSource }
+            expandable={expandable}
+            scroll={{y: tableScrollHeight}}
             rowKey={rowKey}>
             {
                 modifyColumns().map(column => {

@@ -53,19 +53,19 @@ const menus = [
                         key: 6,
                         title: '店铺列表',
                         icon: ShopOutlined,
-                        path: '/shop',
+                        path: '/home/shopList',
                     },
                     {
                         key: 8,
                         title: '店铺管理',
                         icon: ShopOutlined,
-                        path: '/shopDetail',
+                        path: '/home/shopDetail',
                     },
                     {
                         key: 7,
                         title: '店铺分类',
                         icon: PartitionOutlined,
-                        path: '/shopCategory',
+                        path: '/home/shopCategory',
                     },
                 ]
             },
@@ -84,7 +84,7 @@ const menus = [
                         key: 11,
                         title: '商品标签',
                         icon: TagOutlined,
-                        path: '/goodsLabel'
+                        path: '/home/goodsLabel'
                     },
                 ]
             },

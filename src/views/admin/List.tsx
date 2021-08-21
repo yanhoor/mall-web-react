@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Form, Input, Row, Col, Button, Tag, message } from 'antd'
 import { observer, inject } from 'mobx-react'
 import LayoutList from "@/views/layout/components/_listContent"

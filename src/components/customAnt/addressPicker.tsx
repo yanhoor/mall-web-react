@@ -73,7 +73,7 @@ export default function AddressPicker({ addressName, value, onChange, onUpdate }
     }
 
     const onValueChange = (val: any, options: any) => {
-        const adr = options.map((op: Option) => op ? op.fullname : '').join('/')
+        const adr = options.map((op: Option) => op ? op.fullname : '').join('')
         setAddressText(adr)
         onUpdate?.(adr)
         onChange?.(val, options)

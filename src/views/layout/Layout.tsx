@@ -17,7 +17,7 @@ export default function ContentLayout({ children }: Props) {
             <Sider className={styles.layout_left} collapsible>
                 <LayoutMenu/>
             </Sider>
-            <Layout className={styles.layout_right}>
+            <Layout className={styles.layout_right} id="layoutRight">
                 <Header className={styles.layout_header}>
                     <LayoutHeader/>
                 </Header>

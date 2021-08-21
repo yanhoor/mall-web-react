@@ -1,5 +1,5 @@
 import { Form, Button, Input, Radio, message } from 'antd'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useHistory } from "react-router-dom"
 import rules from '../../config/rules'
 import { UserOutlined, PhoneOutlined, LockOutlined } from '@ant-design/icons'
@@ -70,7 +70,7 @@ export default function Login() {
                         <Input prefix={<PhoneOutlined/>}/>
                     </Form.Item>
                     <Form.Item label="密码" name="password" rules={[rules.required()]}>
-                        <Input type="password" prefix={<LockOutlined/>}/>
+                        <Input.Password prefix={<LockOutlined/>}/>
                     </Form.Item>
                     {
                         isRegister ? (<Form.Item label="账户类型" name="type" rules={[rules.required()]}>
