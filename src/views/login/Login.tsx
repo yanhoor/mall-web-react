@@ -62,27 +62,40 @@ export default function Login() {
             <div className={styles.container}>
                 <Form {...layout} form={formRef}>
                     {
-                        isRegister ? (<Form.Item label="用户名" name="name" rules={[rules.required()]}>
-                            <Input prefix={<UserOutlined/>}/>
-                        </Form.Item>) : null
+                        isRegister
+                            ? (
+                                <Form.Item label="用户名" name="name" rules={[rules.required()]}>
+                                    <Input prefix={<UserOutlined/>}/>
+                                </Form.Item>
+                            )
+                            : null
                     }
                     <Form.Item label="手机号" name="mobile" rules={[rules.required(), rules.mobile()]}>
-                        <Input prefix={<PhoneOutlined/>}/>
+                        <Input maxLength={11} prefix={<PhoneOutlined/>}/>
                     </Form.Item>
                     <Form.Item label="密码" name="password" rules={[rules.required()]}>
                         <Input.Password prefix={<LockOutlined/>}/>
                     </Form.Item>
                     {
-                        isRegister ? (<Form.Item label="账户类型" name="type" rules={[rules.required()]}>
-                            <Radio.Group options={options} optionType="button" buttonStyle="solid"/>
-                        </Form.Item>) : null
+                        isRegister
+                            ? (
+                                <Form.Item label="账户类型" name="type" rules={[rules.required()]}>
+                                    <Radio.Group options={options} optionType="button" buttonStyle="solid"/>
+                                </Form.Item>
+                            )
+                            : null
                     }
                 </Form>
                 <div className={styles.actions}>
-                    {isRegister ? (<Button type="primary" onClick={() => validateForm(1)}>注册</Button> ): (<Button type="primary" onClick={() => validateForm(2)}>登录</Button>)}
+                    {isRegister
+                        ? (<Button type="primary" onClick={() => validateForm(1)}>注册</Button>)
+                        : (<Button type="primary" onClick={() => validateForm(2)}>登录</Button>)
+                    }
 
                     {
-                        isRegister ? (<Button type="link" onClick={() => setIsRegister(false)}>已有账号？去登录</Button>) : (<Button type="link" onClick={() => setIsRegister(true)}>没有账号？去注册</Button>)
+                        isRegister
+                            ? (<Button type="link" onClick={() => setIsRegister(false)}>已有账号？去登录</Button>)
+                            : (<Button type="link" onClick={() => setIsRegister(true)}>没有账号？去注册</Button>)
                     }
                 </div>
             </div>

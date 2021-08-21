@@ -1,14 +1,33 @@
 import { Menu } from 'antd'
 import menus from '../menus'
 import React from 'react'
+import { inject, observer } from "mobx-react"
 import {useHistory, useLocation} from "react-router-dom"
+import { routeList } from '@/router'
 
 const { SubMenu } = Menu
 
-export default function LayoutMenu() {
-
+function LayoutMenu({ UserStore }: any) {
     let history = useHistory()
     let location = useLocation()
+    const userRoles = UserStore.userInfo.roles
+
+    const accessRoutes = routeList.filter((route) => {
+        return route.roles && route.roles.some( (r: any) => userRoles.includes(r) )
+    }).map( r => r.path)
+
+    const filterMenus = (menus: Array<any>) => {
+        let result: any[] = []
+        menus.forEach(item => {
+            const temp = { ...item }
+            if(item.children){
+                let children = filterMenus(item.children)
+                temp.children = children
+            }
+            if(accessRoutes.includes(temp.path) || (temp.children && temp.children.length)) result.push(temp)
+        })
+        return result
+    }
 
     function getMenuItem(children: Array<any>): React.ReactNode {
 
@@ -35,7 +54,9 @@ export default function LayoutMenu() {
 
     return (
         <Menu mode="inline" theme="dark">
-            {getMenuItem(menus)}
+            {getMenuItem(filterMenus(menus))}
         </Menu>
     )
 }
+
+export default inject('UserStore')(observer(LayoutMenu))

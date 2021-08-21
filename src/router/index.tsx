@@ -66,9 +66,11 @@ const AuthRoute = observer((props: any) => {
     }else{
         const adminRoles = userInfo.roles
         if(!userInfo.id){
+            console.log('权限路由，先获取登录信息', props.route.path)
             userStore.checkAndGetUserInfo()
             return null
         }else if(adminRoles.includes('super') || adminRoles.some((item: string) => routeRoles.includes(item))){
+            console.log('权限路由，登录信息已获取', props.route.path)
             return (
                 <props.route.component {...props.routeProps} children={props.children}/>
             )
