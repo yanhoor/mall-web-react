@@ -25,6 +25,7 @@ export default function CustomTable({ columns, rowKey = 'id', onChange, paginati
 
     useEffect(() => {
         window.addEventListener('resize', adjustTable)
+        return () => window.removeEventListener('resize', adjustTable)
     }, [])
 
     useEffect(() => {

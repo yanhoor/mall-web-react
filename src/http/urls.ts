@@ -21,6 +21,7 @@ export default {
     goodsCategorySave: '/goods/category_save',
     goodsCategoryChildren: '/goods/category_children',
     goodsSave: '/goods/save',
+    goodsDetail: '/goods/detail',
     goodsList: '/goods/list',
     goodsLabelList: '/goods/label_list',
     goodsLabelDetail: '/goods/label_detail',

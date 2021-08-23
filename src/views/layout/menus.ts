@@ -78,7 +78,7 @@ const menus = [
                         key: 10,
                         title: '商品管理',
                         icon: TeamOutlined,
-                        path: '/goods'
+                        path: '/home/goods'
                     },
                     {
                         key: 11,

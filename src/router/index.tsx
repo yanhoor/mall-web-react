@@ -14,6 +14,7 @@ import GoodsLabelList from "@/views/goodsLabel/List"
 import ShopList from "@/views/shop/List"
 import ShopCategoryList from "@/views/shopCategory/List"
 import ShopManagement from "@/views/shop/Management"
+import GoodsList from "@/views/goods/List"
 import PageNotFound from '../views/PageNotFound'
 
 interface RouteProps extends BaseRouteProps{
@@ -133,6 +134,11 @@ const routes: RouteProps[] = [
             {
                 path: '/home/shopDetail',
                 component: ShopManagement,
+                roles: allAuth
+            },
+            {
+                path: '/home/goods',
+                component: GoodsList,
                 roles: allAuth
             },
             {

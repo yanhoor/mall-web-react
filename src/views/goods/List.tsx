@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form, Input, Row, Col, Button } from 'antd'
+import { Form, Input, Row, Col, Button, Tag } from 'antd'
 import { observer, inject } from 'mobx-react'
 import LayoutList from "@/views/layout/components/_listContent"
 import CustomTable from "@/components/customAnt/table"
@@ -7,16 +7,14 @@ import CustomDrawer from "@/components/customAnt/drawer"
 import urls from "@/http/urls"
 import {TablePaginationConfig} from "antd/es/table"
 import { usePageList } from "@/hooks"
-import ShopCategoryEdit from "@/views/shopCategory/Edit"
+import GoodsEdit from "./Edit"
 
-function ShopCategoryList(props: any){
+function GoodsList(props: any){
     const [ formRef ] = Form.useForm()
     const [editVisible, setEditVisible] = useState(false)
     const [editId, setEditId] = useState('')
-    const { UserStore } = props
     let { pageList, pagination, getPageList, setPagination } = usePageList({
-        url: urls.shopCategoryList,
-        options: { method: 'get' }
+        url: urls.goodsList
     })
 
     const onQuery = (init: boolean = false) => {
@@ -51,11 +49,16 @@ function ShopCategoryList(props: any){
         onQuery()
     }
 
+    const exportExcel = () => {
+        const form = document.querySelector('#downloadForm') as HTMLFormElement
+        form.submit()
+    }
+
     const top = (
         <Form form={formRef}>
             <Row gutter={[0, 10]}>
                 <Col span={8}>
-                    <Form.Item label="分类名称" name="name">
+                    <Form.Item label="商品名称" name="name">
                         <Input />
                     </Form.Item>
                 </Col>
@@ -68,6 +71,7 @@ function ShopCategoryList(props: any){
             <Button onClick={() => onQuery()}>查询</Button>
             <Button onClick={onResetQuery}>重置</Button>
             <Button onClick={onAddItem}>新增</Button>
+            <Button onClick={exportExcel}>导出</Button>
         </>
     )
 
@@ -78,13 +82,27 @@ function ShopCategoryList(props: any){
             key: 'name'
         },
         {
-            title: '图标',
-            dataIndex: 'icon',
-            key: 'icon',
+            title: '商品描述',
+            dataIndex: 'desc',
+            key: 'desc'
+        },
+        {
+            title: '商品标签',
+            dataIndex: 'label_list',
+            key: 'label_list',
+            width: 200,
             render: (text: string, record: any, index: number) => {
-                return record.icon ? (
-                    <img src={urls.IMG_HOST + record.icon} style={{maxWidth: '50px', height: '50px'}}/>
-                ) : '/';
+                return record.label_list.map((label: any) => (
+                    <Tag color={label.color}>{ label.name }</Tag>
+                ))
+            }
+        },
+        {
+            title: '所属分类',
+            dataIndex: 'category_list',
+            key: 'category_list',
+            render: (text: string, record: any, index: number) => {
+                return record.category_list.map((c: any) => c.name).join('/')
             }
         },
         {
@@ -120,13 +138,17 @@ function ShopCategoryList(props: any){
                 />}
             />
             <CustomDrawer
-                title={editId ? '编辑分类' : '新建分类'}
+                title={editId ? '编辑商品' : '新建商品'}
+                width={600}
                 visible={editVisible}
                 onClose={onCloseEdit}
-                content={<ShopCategoryEdit id={editId} onClose={onCloseEdit} visible={editVisible}/>}
+                content={<GoodsEdit id={editId} onClose={onCloseEdit} visible={editVisible}/>}
             />
+            <iframe name="download" style={{display: 'none'}} />
+            <form action="/api/goods/export/goods_export" target="download" id="downloadForm" style={{display: 'none'}}>
+            </form>
         </>
     )
 }
 
-export default inject('UserStore')(observer(ShopCategoryList))
+export default inject('UserStore')(observer(GoodsList))
