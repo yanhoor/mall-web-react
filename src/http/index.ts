@@ -1,6 +1,6 @@
-import axios, {AxiosRequestConfig} from 'axios';
+import axios, {AxiosRequestConfig} from 'axios'
 
-const baseURL = process.env.REACT_APP_ENV === 'dev' ? '/api' : process.env.VUE_APP_BASE_URL;
+const baseURL = process.env.REACT_APP_ENV === 'dev' ? '/api' : process.env.REACT_APP_BASE_URL
 
 console.log('==============', baseURL)
 
@@ -12,24 +12,24 @@ const DEFAULT_CONFIG: AxiosRequestConfig = {
     headers: {
         mobile_login_token: '3333333333'
     }
-};
+}
 
 class Http {
-    api = axios.create();
+    api = axios.create()
 
     constructor() {
         // 请求拦截配置
         this.api.interceptors.request.use(config => {
-            // console.log(`请求拦截配置-->`, config);
-            return config; // 需要返回
+            // console.log(`请求拦截配置-->`, config)
+            return config // 需要返回
         }, error => {
-            console.log(`请求拦截出错--> `, error);
-            return Promise.reject(error);
+            console.log(`请求拦截出错--> `, error)
+            return Promise.reject(error)
         })
 
         // 响应拦截配置
         this.api.interceptors.response.use(response => {
-            // console.table(`响应拦截-->`, response.data);
+            // console.table(`响应拦截-->`, response.data)
             // if(response.data.code == 900 && router.currentRoute.value.path != '/login'){
             //     router.push({
             //         path: '/login',
@@ -38,41 +38,41 @@ class Http {
             //         }
             //     })
             // }
-            return response.data;
+            return response.data
         }, error => {
-            console.log(`响应拦截出错-->`, error);
-            return Promise.reject(error);
+            console.log(`响应拦截出错-->`, error)
+            return Promise.reject(error)
         })
     }
 
     async fetch(url: string, params?: FetchParams, options?: RequestOptions): Promise<any> {
-        const op = Object.assign({}, DEFAULT_CONFIG, options);
-        const {formData, loading, method} = op;
-        const reqConfig = {...DEFAULT_CONFIG, url, method};
+        const op = Object.assign({}, DEFAULT_CONFIG, options)
+        const {formData, loading, method} = op
+        const reqConfig = {...DEFAULT_CONFIG, url, method}
         if (method === 'get') {
-            reqConfig.method = method;
-            reqConfig.params = params;
+            reqConfig.method = method
+            reqConfig.params = params
         } else if (formData) {
-            const formData = new FormData();
-            const par = params ?? {};
+            const formData = new FormData()
+            const par = params ?? {}
             Object.keys(par).forEach(key => {
                 formData.append(key, par[key])
             })
-            reqConfig.data = formData;
+            reqConfig.data = formData
         } else {
-            reqConfig.data = params;
+            reqConfig.data = params
         }
         return new Promise((resolve, reject) => {
             this.api.request(reqConfig).then(res => {
-                return resolve(res);
+                return resolve(res)
             }).catch(e => {
-                return reject(e);
-            });
-        });
+                return reject(e)
+            })
+        })
     }
 }
 
-const $http = new Http();
+const $http = new Http()
 
 export default $http
 
@@ -102,11 +102,11 @@ declare global {
     * 请求选项
     * */
     interface RequestOptions extends AxiosRequestConfig {
-        baseUrl?: string;
+        baseUrl?: string
         // 是否使用formData
-        formData?: boolean;
-        timeOut?: number;
+        formData?: boolean
+        timeOut?: number
         // 是否显示loading
-        loading?: boolean;
+        loading?: boolean
     }
 }
