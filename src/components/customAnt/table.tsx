@@ -32,28 +32,22 @@ export default function CustomTable({ columns, rowKey = 'id', onChange, paginati
         adjustTable()
     }, [dataSource])
 
-    const modifyColumns = (): ColumnProps<Item>[] => {
-        const hasIndex = columns.some((column) => column.key === 'index')
-        const hasLastTime = columns.some((column) => column.key === 'modify_time')
-        if(!hasIndex){
-            columns.unshift({
-                title: '#',
-                dataIndex: '',
-                key: 'index',
-                render: (text: string, record: any, index: number) => {
-                    return index + 1
-                }
-            })
-        }
-        if(!hasLastTime){
-            columns.splice(-1, 0, {
-                title: '最后修改时间',
-                dataIndex: 'modify_time',
-                key: 'modify_time'
-            })
-        }
-        return columns
-    }
+    const modifyColumns: ColumnProps<Item>[] = [
+        {
+            title: '#',
+            dataIndex: '',
+            key: 'index',
+            render: (text: string, record: any, index: number) => {
+                return index + 1
+            }
+        },
+        ...columns,
+    ]
+    modifyColumns.splice(-1, 0, {
+        title: '最后修改时间',
+        dataIndex: 'modify_time',
+        key: 'modify_time'
+    })
 
     const adjustTable = debounce(async () => {
         const rh = document.querySelector('#layoutRight')?.clientHeight as number
@@ -84,7 +78,7 @@ export default function CustomTable({ columns, rowKey = 'id', onChange, paginati
             scroll={{y: tableScrollHeight}}
             rowKey={rowKey}>
             {
-                modifyColumns().map(column => {
+                modifyColumns.map(column => {
                     return (
                         <Table.Column<Item>
                             {...column}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form, Input, Row, Col, Button, Tag } from 'antd'
+import { Form, Input, Row, Col, Button } from 'antd'
 import { observer, inject } from 'mobx-react'
 import LayoutList from "@/views/layout/components/_listContent"
 import CustomTable from "@/components/customAnt/table"
@@ -16,7 +16,6 @@ function ShopList(props: any){
     const [ formRef ] = Form.useForm()
     const [editVisible, setEditVisible] = useState(false)
     const [editId, setEditId] = useState('')
-    const { UserStore } = props
     let { pageList, pagination, getPageList, setPagination } = usePageList({
         url: urls.shopList,
         options: { method: 'get' }
@@ -39,12 +38,7 @@ function ShopList(props: any){
         setPagination(page)
     }
 
-    const onAddItem = () => {
-        setEditId('')
-        setEditVisible(true)
-    }
-
-    const handleEdit = (id: string) => {
+    const handleEdit = (id: string = '') => {
         setEditId(id)
         setEditVisible(true)
     }
@@ -75,7 +69,7 @@ function ShopList(props: any){
         <>
             <Button onClick={() => onQuery()}>查询</Button>
             <Button onClick={onResetQuery}>重置</Button>
-            <Button onClick={onAddItem}>新增</Button>
+            <Button onClick={() => handleEdit()}>新增</Button>
         </>
     )
 

@@ -1,18 +1,18 @@
 import React from 'react'
-import { HashRouter as Router, Switch, Route } from 'react-router-dom'
-import { routes, RouterView, NoMatchRoute } from './router'
+import { HashRouter, Switch } from 'react-router-dom'
+import { routes, RouterView } from './router'
 import './App.css'
 
 function App() {
   return (
       <div className="App">
-          <Router>
+          <HashRouter>
               <Switch>
                   {routes.map((route, i) => (
                       <RouterView key={i} {...route}/>
                   ))}
               </Switch>
-          </Router>
+          </HashRouter>
       </div>
   )
 }

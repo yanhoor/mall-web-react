@@ -13,7 +13,6 @@ function ShopCategoryList(props: any){
     const [ formRef ] = Form.useForm()
     const [editVisible, setEditVisible] = useState(false)
     const [editId, setEditId] = useState('')
-    const { UserStore } = props
     let { pageList, pagination, getPageList, setPagination } = usePageList({
         url: urls.shopCategoryList,
         options: { method: 'get' }
@@ -36,12 +35,7 @@ function ShopCategoryList(props: any){
         setPagination(page)
     }
 
-    const onAddItem = () => {
-        setEditId('')
-        setEditVisible(true)
-    }
-
-    const handleEdit = (id: string) => {
+    const handleEdit = (id: string = '') => {
         setEditId(id)
         setEditVisible(true)
     }
@@ -67,7 +61,7 @@ function ShopCategoryList(props: any){
         <>
             <Button onClick={() => onQuery()}>查询</Button>
             <Button onClick={onResetQuery}>重置</Button>
-            <Button onClick={onAddItem}>新增</Button>
+            <Button onClick={() => handleEdit()}>新增</Button>
         </>
     )
 

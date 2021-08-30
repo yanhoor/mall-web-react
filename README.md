@@ -2,7 +2,7 @@
 
 ## 技术栈
 
-`React + React-router + Mobx + history + antd + less`
+`React + React-router + Mobx + TypeScript + history + antd + less`
 
 ## 创建过程
 

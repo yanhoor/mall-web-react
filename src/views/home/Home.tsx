@@ -2,6 +2,7 @@ import {Switch, Route, HashRouter as Router} from 'react-router-dom'
 import {NoMatchRoute, RouterView, routes} from "../../router";
 import React from "react"
 import $http from '../../http'
+import styles from './home.module.less'
 
 interface Props{
     children: Array<any>
@@ -16,11 +17,8 @@ export default function Home({ children }: Props) {
     return (
         <>
             <h1 onClick={onClick}>Home</h1>
-            <Switch>
-                {children.map((route, i) => (
-                    <RouterView key={i} {...route}/>
-                ))}
-            </Switch>
+            <div className={styles.div1} />
+            <div className={styles.div2} />
         </>
     )
 }

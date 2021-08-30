@@ -34,12 +34,7 @@ function GoodsList(props: any){
         setPagination(page)
     }
 
-    const onAddItem = () => {
-        setEditId('')
-        setEditVisible(true)
-    }
-
-    const handleEdit = (id: string) => {
+    const handleEdit = (id: string = '') => {
         setEditId(id)
         setEditVisible(true)
     }
@@ -70,7 +65,7 @@ function GoodsList(props: any){
         <>
             <Button onClick={() => onQuery()}>查询</Button>
             <Button onClick={onResetQuery}>重置</Button>
-            <Button onClick={onAddItem}>新增</Button>
+            <Button onClick={() => handleEdit()}>新增</Button>
             <Button onClick={exportExcel}>导出</Button>
         </>
     )
@@ -93,7 +88,7 @@ function GoodsList(props: any){
             width: 200,
             render: (text: string, record: any, index: number) => {
                 return record.label_list.map((label: any) => (
-                    <Tag color={label.color}>{ label.name }</Tag>
+                    <Tag key={label.id} color={label.color}>{ label.name }</Tag>
                 ))
             }
         },

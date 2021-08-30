@@ -5,10 +5,11 @@ import {observer} from "mobx-react"
 import { message } from 'antd'
 import { RouteProps as BaseRouteProps } from 'react-router'
 import { UserStore } from '../store'
-import ContentLayout from '../views/layout/Layout'
-import About from '../views/home/About'
-import Login from '../views/login/Login'
-import AdminIndex from '../views/admin/Admin'
+import ContentLayout from '@/views/layout/Layout'
+import About from '@/views/home/About'
+import Login from '@/views/login/Login'
+import AdminIndex from '@/views/admin/Admin'
+import Home from '@/views/home/Home'
 import AdminList from "@/views/admin/List"
 import GoodsLabelList from "@/views/goodsLabel/List"
 import ShopList from "@/views/shop/List"
@@ -162,6 +163,10 @@ const routes: RouteProps[] = [
     {
         path: '/login',
         component: Login,
+    },
+    {
+        path: '/test',
+        component: Home,
     },
     {
         path: '*',

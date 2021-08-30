@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Form, Input, Row, Col, Button, Tag, message } from 'antd'
 import { observer, inject } from 'mobx-react'
 import LayoutList from "@/views/layout/components/_listContent"
@@ -36,16 +36,11 @@ function GoodsLabelList(props: any){
         setPagination(page)
     }
 
-    const onAddItem = () => {
-        if(!UserStore.userInfo.shop_id){
+    const handleEdit = (id: string = '') => {
+        if(!id && !UserStore.userInfo.shop_id){
             message.error('请先添加店铺')
             return
         }
-        setEditId('')
-        setEditVisible(true)
-    }
-
-    const handleEdit = (id: string) => {
         setEditId(id)
         setEditVisible(true)
     }
@@ -71,7 +66,7 @@ function GoodsLabelList(props: any){
         <>
             <Button onClick={() => onQuery()}>查询</Button>
             <Button onClick={onResetQuery}>重置</Button>
-            <Button onClick={onAddItem}>新增</Button>
+            <Button onClick={() => handleEdit()}>新增</Button>
         </>
     )
 

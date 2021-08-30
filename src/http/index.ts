@@ -1,4 +1,5 @@
 import axios, {AxiosRequestConfig} from 'axios'
+import { message } from 'antd'
 
 const baseURL = process.env.REACT_APP_ENV === 'dev' ? '/api' : process.env.REACT_APP_BASE_URL
 
@@ -30,14 +31,9 @@ class Http {
         // 响应拦截配置
         this.api.interceptors.response.use(response => {
             // console.table(`响应拦截-->`, response.data)
-            // if(response.data.code == 900 && router.currentRoute.value.path != '/login'){
-            //     router.push({
-            //         path: '/login',
-            //         query: {
-            //             from: router.currentRoute.value.fullPath
-            //         }
-            //     })
-            // }
+            if(response.data.code === 900){
+                message.error('请重新登录')
+            }
             return response.data
         }, error => {
             console.log(`响应拦截出错-->`, error)
