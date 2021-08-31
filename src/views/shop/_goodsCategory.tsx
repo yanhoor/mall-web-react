@@ -3,6 +3,7 @@ import {Button, Tree, Dropdown, Modal, Menu, Form, Input, message} from 'antd'
 import $http from "@/http"
 import urls from "@/http/urls"
 import rules from "@/config/rules"
+import {useUnmounted} from "@/hooks"
 
 interface Item{
     id: number | string,
@@ -35,10 +36,13 @@ export default function GoodsCategory({ shop_id }: Props){
     const [menuKey, setMenuKey] = useState('')
     const [showEdit, setShowEdit] = useState(false)
     const [postForm, setPostForm] = useState<any>() // 提交的form，含antd Form组件其他不包含的必需信息
+    const unmounted = useUnmounted()
 
     useEffect(() => {
         getChildren(0).then( (r: any) => {
-            setTreeData(r)
+            if(!unmounted) {
+                setTreeData(r)
+            }
         })
     }, [])
 

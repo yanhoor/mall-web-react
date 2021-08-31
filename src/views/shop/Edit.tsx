@@ -9,6 +9,7 @@ import AddressPicker from "@/components/customAnt/addressPicker"
 import ShopCategorySelect from "@/components/business/shopCategorySelect"
 import {inject, observer} from "mobx-react"
 import moment from "moment"
+import {useUnmounted} from "@/hooks"
 
 interface Props{
     id?: number | string
@@ -21,6 +22,7 @@ function ShopEdit({id, onClose, visible, UserStore}: Props){
     const [ formRef ] = Form.useForm()
     let [addressName, setAddressName] = useState<any>('')
     const [address, setAddress] = useState('')
+    const unmounted = useUnmounted()
 
     useEffect(() => {
         initForm()
@@ -63,7 +65,9 @@ function ShopEdit({id, onClose, visible, UserStore}: Props){
                     opening_range: timeRange,
                     codeList: [r.info.provinceCode, r.info.cityCode, r.info.countyCode]
                 })
-                setAddressName(r.info.headAddress)
+                if(!unmounted){
+                    setAddressName(r.info.headAddress)
+                }
             }else{
                 message.error(r.msg)
             }

@@ -5,6 +5,7 @@ import { CascaderProps } from 'antd/es/cascader'
 import $http from "@/http"
 import urls from "@/http/urls"
 import styles from '../components.module.less'
+import {useUnmounted} from "@/hooks"
 
 type OnChange = CascaderProps['onChange']
 
@@ -33,13 +34,16 @@ interface Props{
 export default function AddressPicker({ addressName, value, onChange, onUpdate }: Props){
     const [options, setOptions] = React.useState([])
     const [addressText, setAddressText] = useState(addressName)
+    const unmounted = useUnmounted()
 
     useEffect(() => {
         initData()
     }, [])
 
     useEffect(() => {
-        setAddressText(addressName)
+        if(!unmounted) {
+            setAddressText(addressName)
+        }
     }, [addressName])
 
     const initData = async () => {
@@ -49,7 +53,9 @@ export default function AddressPicker({ addressName, value, onChange, onUpdate }
             item.isLeaf = false
             return item
         })
-        setOptions(result)
+        if(!unmounted){
+            setOptions(result)
+        }
     }
 
     const loadData = async (selectedOptions: Option[]) => {
@@ -65,7 +71,9 @@ export default function AddressPicker({ addressName, value, onChange, onUpdate }
             })
         }
         targetOption.loading = false
-        setOptions([...options])
+        if(!unmounted){
+            setOptions([...options])
+        }
     }
 
     const fetchChildren = async (id = '') => {
@@ -74,7 +82,9 @@ export default function AddressPicker({ addressName, value, onChange, onUpdate }
 
     const onValueChange = (val: any, options: any) => {
         const adr = options.map((op: Option) => op ? op.fullname : '').join('')
-        setAddressText(adr)
+        if(!unmounted) {
+            setAddressText(adr)
+        }
         onUpdate?.(adr)
         onChange?.(val, options)
     }
