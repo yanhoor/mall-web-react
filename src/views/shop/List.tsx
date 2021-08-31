@@ -23,9 +23,12 @@ function ShopList(props: any){
 
     const onQuery = (init: boolean = false) => {
         const val = formRef.getFieldsValue()
-        if(init){
-            val.current = 1
-        }
+        setPagination(preVal => {
+            return {
+                ...preVal,
+                current: 1
+            }
+        })
         getPageList(val)
     }
 

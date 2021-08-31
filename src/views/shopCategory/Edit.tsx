@@ -15,7 +15,7 @@ export default function ShopCategoryEdit({id, onClose, visible}: Props){
     const [ formRef ] = Form.useForm()
     useEffect(() => {
         initForm()
-    }, [visible])
+    }, [id])
 
     const initForm = () => {
         if(!id) {

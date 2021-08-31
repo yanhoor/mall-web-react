@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import $http from "@/http"
 import { PaginationProps } from "antd/es"
 
@@ -19,12 +19,12 @@ function usePageList({ url, params, options }: PageListProps){
         showSizeChanger: true
     })
 
-    const getPaginationParams = () => {
+    const getPaginationParams = useCallback(() => {
         return {
             current: pagination.current,
             pageSize: pagination.pageSize,
         }
-    }
+    }, [pagination.current, pagination.pageSize])
 
     const getPageList = (p: FetchParams = {}) => {
         $http.fetch(url, {...params, ...getPaginationParams(), ...p}, options).then( r => {
@@ -32,13 +32,13 @@ function usePageList({ url, params, options }: PageListProps){
             setPagination(preVal => {
                 return {
                     ...preVal,
-                    total: r.amount
+                    total: r.amount,
                 }
             })
         })
     }
 
-    useEffect(getPageList, [pagination.current, pagination.pageSize])
+    useEffect(getPageList, [ getPaginationParams ])
 
     // 如果是数组，使用 setPagination 时会报错，具体 https://stackoverflow.com/questions/65657572/custom-useinput-hook-and-typescript-error
     return { pageList, pagination, getPageList, setPagination }
