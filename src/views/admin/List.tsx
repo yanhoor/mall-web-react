@@ -11,7 +11,7 @@ import $http from "@/http"
 function AdminList(props: any){
     const [ formRef ] = Form.useForm()
     const { UserStore } = props
-    let { pageList, pagination, getPageList, setPagination } = usePageList({
+    let { pageList, pagination, getPageList, setPagination, pageState } = usePageList({
         url: urls.adminList,
         options: { method: 'get' }
     })
@@ -156,6 +156,7 @@ function AdminList(props: any){
                 columns={columns}
                 onChange={handleTableChange}
                 dataSource={pageList}
+                pageState={pageState}
                 pagination={pagination}
             />}
         />

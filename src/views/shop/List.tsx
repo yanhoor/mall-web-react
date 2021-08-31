@@ -16,7 +16,7 @@ function ShopList(props: any){
     const [ formRef ] = Form.useForm()
     const [editVisible, setEditVisible] = useState(false)
     const [editId, setEditId] = useState('')
-    let { pageList, pagination, getPageList, setPagination } = usePageList({
+    let { pageList, pagination, getPageList, setPagination, pageState } = usePageList({
         url: urls.shopList,
         options: { method: 'get' }
     })
@@ -139,6 +139,7 @@ function ShopList(props: any){
                     onChange={handleTableChange}
                     dataSource={pageList}
                     pagination={pagination}
+                    pageState={pageState}
                     expandable={{
                         expandedRowRender: (record) => (<RowExpanded record={record}/>)
                     }}

@@ -13,7 +13,7 @@ function GoodsList(props: any){
     const [ formRef ] = Form.useForm()
     const [editVisible, setEditVisible] = useState(false)
     const [editId, setEditId] = useState('')
-    let { pageList, pagination, getPageList, setPagination } = usePageList({
+    const { pageList, pagination, getPageList, setPagination, pageState } = usePageList({
         url: urls.goodsList
     })
 
@@ -133,6 +133,7 @@ function GoodsList(props: any){
                     onChange={handleTableChange}
                     dataSource={pageList}
                     pagination={pagination}
+                    pageState={pageState}
                 />}
             />
             <CustomDrawer

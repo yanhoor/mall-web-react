@@ -14,7 +14,7 @@ function GoodsLabelList(props: any){
     const [editVisible, setEditVisible] = useState(false)
     const [editId, setEditId] = useState('')
     const { UserStore } = props
-    let { pageList, pagination, getPageList, setPagination } = usePageList({
+    let { pageList, pagination, getPageList, setPagination, pageState } = usePageList({
         url: urls.goodsLabelList,
         options: { method: 'get' }
     })
@@ -121,6 +121,7 @@ function GoodsLabelList(props: any){
                     columns={columns}
                     onChange={handleTableChange}
                     dataSource={pageList}
+                    pageState={pageState}
                     pagination={pagination}
                 />}
             />

@@ -13,7 +13,7 @@ function ShopCategoryList(props: any){
     const [ formRef ] = Form.useForm()
     const [editVisible, setEditVisible] = useState(false)
     const [editId, setEditId] = useState('')
-    let { pageList, pagination, getPageList, setPagination } = usePageList({
+    let { pageList, pagination, getPageList, setPagination, pageState } = usePageList({
         url: urls.shopCategoryList,
         options: { method: 'get' }
     })
@@ -113,6 +113,7 @@ function ShopCategoryList(props: any){
                     columns={columns}
                     onChange={handleTableChange}
                     dataSource={pageList}
+                    pageState={pageState}
                     pagination={pagination}
                 />}
             />

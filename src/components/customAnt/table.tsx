@@ -4,6 +4,7 @@ import { ColumnProps, TablePaginationConfig } from 'antd/es/table'
 import styles from '../components.module.less'
 import {ExpandableConfig} from "rc-table/lib/interface"
 import { debounce } from 'lodash'
+import PageState from "@/config/pageState"
 
 interface Item{
     [name: string]: any
@@ -11,6 +12,7 @@ interface Item{
 
 interface Props{
     // columns: ColumnsType<Item>
+    pageState?: PageState
     columns: ColumnProps<Item>[]
     dataSource: Item[]
     rowKey?: string
@@ -19,7 +21,7 @@ interface Props{
     expandable?: ExpandableConfig<Item>
 }
 
-export default function CustomTable({ columns, rowKey = 'id', onChange, pagination, dataSource, expandable }: Props){
+export default function CustomTable({ columns, rowKey = 'id', onChange, pagination, dataSource, expandable, pageState }: Props){
 
     const [tableScrollHeight, setTableScrollHeight] = useState<number>()
 
@@ -71,6 +73,7 @@ export default function CustomTable({ columns, rowKey = 'id', onChange, paginati
                 if(index % 2 === 1) return styles.table_striped
                 return ''
             }}
+            loading={pageState === PageState.loading}
             pagination={pagination}
             onChange={onChange}
             dataSource={ dataSource }
