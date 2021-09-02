@@ -4,6 +4,12 @@
 
 `React + React-router + Mobx + TypeScript + history + antd + less`
 
+## 运行项目
+
+- `npm i`
+
+- `npm run start`
+
 ## 创建过程
 
 - `npx create-react-app mall-web-react --template typescript`
@@ -11,6 +17,23 @@
 - 添加路由
 
   - `npm i -S react-router-dom @types/react-router-dom`
+
+  - 路由匹配规则: 如果路由或 `url` 最后只有 `/`，`exact` 会匹配，但是不会匹配到子路由。`strict` 是严格匹配，路径中的 `/` 不会忽略
+
+    |  exact  |  strict  |  routePath  |  url  |  结果  |
+    | ------  |  ------  |  ---------  |  ---  |  ----  |
+    |  /  |  /  |  /one  | /one/two  |  匹配  |
+    |  true  |  /  |  /one  | /one/two  |  不匹配  |
+    |  /  |  true  |  /one  | /one/two  |  匹配  |
+    |  true  |  true  |  /one  | /one/two  |  不匹配  |
+    |  /  |  /  |  /one  | /one/   |  匹配  |
+    |  true  |  /  |  /one  | /one/   |  匹配  |
+    |  /  |  true  |  /one  | /one/   |  匹配  |
+    |  true  |  true  |  /one  | /one/   |  不匹配  |
+    |  /  |  /  |  /one/ | /one  |  匹配  |
+    |  true  |  /  |  /one/ | /one  |  匹配  |
+    |  /  |  true  |  /one/ | /one  |  不匹配  |
+    |  true  |  true  |  /one/ | /one  |  不匹配  |
 
 - 本地开发代理
 

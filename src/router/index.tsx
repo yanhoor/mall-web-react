@@ -28,8 +28,8 @@ interface RouteProps extends BaseRouteProps{
 
 // 路由组件
 const RouterView = (route: RouteProps) => {
-    console.log('----------------RouterView props-----------------', route)
-    console.log('----------------useRouteMatch-----------------', useRouteMatch())
+    // console.log('----------------RouterView props-----------------', route)
+    // console.log('----------------useRouteMatch-----------------', useRouteMatch())
     return (
         route.redirect
             ? <Redirect
@@ -42,7 +42,7 @@ const RouterView = (route: RouteProps) => {
                 exact={route.exact}
                 strict={route.strict}
                 render={props => {
-                    console.log('-------------route.props----------', props)
+                    // console.log('-------------route.props----------', props)
                     // pass the sub-routes down to keep nesting
                     return (
                         route.roles
@@ -67,11 +67,11 @@ const AuthRoute = observer((props: any) => {
     }else{
         const adminRoles = userInfo.roles
         if(!userInfo.id){
-            console.log('权限路由，先获取登录信息', props.route.path)
+            // console.log('权限路由，先获取登录信息', props.route.path)
             userStore.checkAndGetUserInfo()
             return null
         }else if(adminRoles.includes('super') || adminRoles.some((item: string) => routeRoles.includes(item))){
-            console.log('权限路由，登录信息已获取', props.route.path)
+            // console.log('权限路由，登录信息已获取', props.route.path)
             return (
                 <props.route.component {...props.routeProps} children={props.children}/>
             )
@@ -183,7 +183,7 @@ function RouteTree2List(list: Array<any>) {
             result = result.concat(RouteTree2List(temp.children))
             temp.children = result
         }
-        result.push(item)
+        result.push(temp)
     })
 
     return result

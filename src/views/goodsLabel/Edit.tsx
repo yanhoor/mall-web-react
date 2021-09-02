@@ -17,7 +17,7 @@ export default function GoodsLabelEdit({id, onClose, visible}: Props){
 
     useEffect(() => {
         initForm()
-    }, [visible])
+    }, [id])
 
     const initForm = () => {
         if(!id) {

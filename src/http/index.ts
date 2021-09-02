@@ -3,7 +3,7 @@ import { message } from 'antd'
 
 const baseURL = process.env.REACT_APP_ENV === 'dev' ? '/api' : process.env.REACT_APP_BASE_URL
 
-console.log('==============', baseURL)
+// console.log('==============', baseURL)
 
 const DEFAULT_CONFIG: AxiosRequestConfig = {
     baseURL: baseURL,
